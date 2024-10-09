@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>coding assignment 5.1</title>
+</head>
+<body>
+    <script>
+    const text = "Hello world! This is a test. Hello, hello world. Testing hello again.";
+    function normalizeText(text) {
+    return text.toLowerCase().replace(/[^\w\s]/g, '');
+    }
+    function countWords(text) {
+    const normalizedText = normalizeText(text);
+    const words = normalizedText.split(/\s+/);
+    const wordCount = {};
+    words.forEach(word => {if (word){wordCount[word] = (wordCount[word] || 0) + 1;}
+    });
+    return wordCount;
+    }
+    function getTopWords(wordCount, topN){
+    const sortedWords = Object.entries(wordCount)
+    .sort((a, b) => b[1] - a[1]);
+    return sortedWords.slice(0, topN);
+    }
+    function findMostCommonWords(text, topN = 3){
+    const wordCount = countWords(text);
+    const topWords = getTopWords(wordCount, topN);
+    console.log('Top Words:');
+    topWords.forEach(([word, count]) => {
+    console.log(`${word}: ${count}`);
+    });
+    }
+    findMostCommonWords(text);
+    </script>
+    </body>
+</html>
