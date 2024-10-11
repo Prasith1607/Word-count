@@ -3,36 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>coding assignment 5.1</title>
+    <title>Word Count Table</title>
 </head>
 <body>
     <script>
-    const text = "Hello world! This is a test. Hello, hello world. Testing hello again.";
-    function normalizeText(text) {
-    return text.toLowerCase().replace(/[^\w\s]/g, '');
-    }
-    function countWords(text) {
-    const normalizedText = normalizeText(text);
-    const words = normalizedText.split(/\s+/);
-    const wordCount = {};
-    words.forEach(word => {if (word){wordCount[word] = (wordCount[word] || 0) + 1;}
-    });
-    return wordCount;
-    }
-    function getTopWords(wordCount, topN){
-    const sortedWords = Object.entries(wordCount)
-    .sort((a, b) => b[1] - a[1]);
-    return sortedWords.slice(0, topN);
-    }
-    function findMostCommonWords(text, topN = 3){
-    const wordCount = countWords(text);
-    const topWords = getTopWords(wordCount, topN);
-    console.log('Top Words:');
-    topWords.forEach(([word, count]) => {
-    console.log(`${word}: ${count}`);
-    });
-    }
-    findMostCommonWords(text);
+        let text = "In the starter code, some comments start with the words TO DO! This is where you could add your lines of codes to solve this assignment. The words will need to be scrubbed of any punctuation. To do so, you may choose to use regex and replace, or you may choose to get rid of any punctuation marks another way. It is up to you! Watch out for casing. The JavaScript compiler does not think a lowercase and an uppercase letter are the same letter the way humans do. To avoid this, set the entire string to be in lowercase.";
+        let result = text.toLowerCase();
+        function replacePunctuation(str) {
+            return str.replace(/[,.!"']/g, ''); 
+        }
+        result = replacePunctuation(result);
+        let split = result.split(" ");
+        let obj = {};
+        
+        for (let i = 0; i < split.length; i++) {
+            if (obj[split[i]] === undefined) {
+                obj[split[i]] = 1; 
+            } else {
+                obj[split[i]]++; 
+            }
+        }
+        console.log(obj)
+
+        let wordCountArray = Object.entries(obj);
+        wordCountArray.sort((a, b) => b[1] - a[1]); 
+        let top5Words = wordCountArray.slice(0, 5);
+        let tableHTML = "<table border='1'><tr><th>Word</th><th>Count</th></tr>";
+        top5Words.forEach(([word, count]) => {
+            tableHTML += `<tr><td>${word}</td><td>${count}</td></tr>`;
+        });
+        tableHTML += "</table>";
+        document.body.innerHTML += tableHTML;
+
     </script>
-    </body>
+</body>
 </html>
